@@ -29,7 +29,7 @@ footer = '''<div data-role="footer" data-theme="e">
 
 class Greeting(db.Expando):
 	''' defining database '''
-	author = db.StringProperty(required=True)
+	# author = db.StringProperty(required=True)
 	title = db.StringProperty(required=True)
 	content = db.StringProperty(multiline=True)
 	date = db.DateTimeProperty(auto_now_add=True)
@@ -61,14 +61,14 @@ class MainPage(webapp2.RequestHandler):
 		list = csv.reader(open("teacherlist.csv","rb"), delimiter=',')
 		for row in list:
 			if row[2]==user.email()[:-7]:
-				self.response.out.write(header + ''' <div data-theme="e">
+				self.response.out.write(header + ''' 
 				<h3>Post an Announcement!</h3>
-      <p><form action="/post" method="post">
-								<div><label for="title">Title:</label><input type="text" name="title" id="title" data-mini="true" /></div>
-								<div><label for="content">Details:</label><textarea name="content" id="content"></textarea></div>
-								<input type="submit" value="Post Announcement">
-							</form></div></body></html></p>
-
+						<form action="/post" method="post">
+								<div>Title: <textarea name="title" rows="1" cols"60"></textarea></div>
+								<div>Details: <textarea name="content" rows="3" cols="60"></textarea></div>
+								<div><input type="submit" value="Post Announcement"></div>
+							</form>
+					</body></html>
 							''')
 				break
 					
@@ -85,7 +85,7 @@ class MainPage(webapp2.RequestHandler):
 			self.response.out.write('''<h3><b>%s</b></h3>'''%str(greeting.title))
 			self.response.out.write('''<h4> - %s</h4>'''%str(users.get_current_user().nickname()))
 			self.response.out.write('''<p>%s</p>'''%(str(greeting.content)))
-			self.response.out.write(footer)
+		self.response.out.write(footer)
 
 
 		
