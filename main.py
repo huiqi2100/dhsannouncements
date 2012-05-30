@@ -61,13 +61,13 @@ class MainPage(webapp2.RequestHandler):
 		list = csv.reader(open("teacherlist.csv","rb"), delimiter=',')
 		for row in list:
 			if row[2]==user.email()[:-7]:
-				self.response.out.write(header + ''' 
+				self.response.out.write(header + ''' <div data-theme="e">
 				<h3>Post an Announcement!</h3>
 						<form action="/post" method="post">
 								<div>Title: <textarea name="title" rows="1" cols"60"></textarea></div>
 								<div>Details: <textarea name="content" rows="3" cols="60"></textarea></div>
 								<div><input type="submit" value="Post Announcement"></div>
-							</form>
+							</form></div>
 					</body></html>
 							''')
 				break
@@ -83,7 +83,7 @@ class MainPage(webapp2.RequestHandler):
 			self.response.out.write('''<blockquote>%s</blockquote>'''%cgi.escape(greeting.content))
 		
 			self.response.out.write('''<h3><b>%s</b></h3>'''%str(greeting.title))
-			self.response.out.write('''<h4> - %s</h4>'''%str(users.get_current_user().nickname()))
+			# self.response.out.write('''<h4> - %s</h4>'''%str(greeting.author))
 			self.response.out.write('''<p>%s</p>'''%(str(greeting.content)))
 		self.response.out.write(footer)
 
@@ -109,14 +109,6 @@ class Announcements(webapp2.RequestHandler):
 		greeting.put()
 		self.redirect('/')
 		
-		# template_values = {
-			# 'user': user,
-			# 'greeting': greeting,
-			# 'title': greeting.title,
-			# 'content': greeting.content}
-				  
-		# template = jinja_environment.get_template('index.html')
-		# self.response.out.write(template.render(template_values))
 
 
 # main
